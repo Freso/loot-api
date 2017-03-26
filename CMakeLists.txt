@@ -115,13 +115,24 @@ ExternalProject_Add(testing-plugins
 
 ExternalProject_Add(yaml-cpp
                     PREFIX "external"
-                    URL "https://github.com/WrinklyNinja/yaml-cpp/archive/patched-for-loot.tar.gz"
+                    URL "https://github.com/loot/yaml-cpp/archive/merge-key-support.tar.gz"
                     CMAKE_ARGS -DMSVC_SHARED_RT=${MSVC_SHARED_RUNTIME}
                     BUILD_COMMAND ${CMAKE_COMMAND} --build . --target yaml-cpp --config $(CONFIGURATION)
                     INSTALL_COMMAND "")
 ExternalProject_Get_Property(yaml-cpp SOURCE_DIR BINARY_DIR)
+
+if (MSVC)
+    if (MSVC_STATIC_RUNTIME)
+      set(YAML_CPP_LIBRARY_SUFFIX "${YAML_CPP_LIBRARY_SUFFIX}mt")
+    else()
+      set(YAML_CPP_LIBRARY_SUFFIX "${YAML_CPP_LIBRARY_SUFFIX}md")
+    endif()
+endif()
+
+set(YAML_CPP_LIBRARY_SUFFIX "${LIB_SUFFIX}${YAML_CPP_LIBRARY_SUFFIX}$<$<CONFIG:Debug>:d>${CMAKE_STATIC_LIBRARY_SUFFIX}")
+
 set(YAML_CPP_INCLUDE_DIRS "${SOURCE_DIR}/include")
-set(YAML_CPP_LIBRARIES "${BINARY_DIR}/${CMAKE_CFG_INTDIR}/libyaml-cpp${CMAKE_STATIC_LIBRARY_SUFFIX}")
+set(YAML_CPP_LIBRARIES "${BINARY_DIR}/${CMAKE_CFG_INTDIR}/libyaml-cpp${YAML_CPP_LIBRARY_SUFFIX}")
 
 ##############################
 # General Settings
