@@ -175,6 +175,11 @@ TEST(Version, GreaterThan) {
   version2 = Version(std::string("5"));
   EXPECT_FALSE(version1 > version2);
   EXPECT_TRUE(version2 > version1);
+
+  version1 = Version(std::string("2.0.1a"));
+  version2 = Version(std::string("2.0.1"));
+  EXPECT_TRUE(version1 > version2);
+  EXPECT_TRUE(version2 > version1);
 }
 
 TEST(Version, LessThan) {
@@ -191,6 +196,11 @@ TEST(Version, LessThan) {
   version2 = Version(std::string("5"));
   EXPECT_TRUE(version1 < version2);
   EXPECT_FALSE(version2 < version1);
+
+  version1 = Version(std::string("2.0.1a"));
+  version2 = Version(std::string("2.0.1"));
+  EXPECT_TRUE(version1 < version2);
+  EXPECT_TRUE(version2 < version1);
 }
 
 TEST(Version, GreaterThanEqual) {
@@ -206,6 +216,11 @@ TEST(Version, GreaterThanEqual) {
   version1 = Version(std::string("4"));
   version2 = Version(std::string("5"));
   EXPECT_FALSE(version1 >= version2);
+  EXPECT_TRUE(version2 >= version1);
+
+  version1 = Version(std::string("2.0.1a"));
+  version2 = Version(std::string("2.0.1"));
+  EXPECT_TRUE(version1 >= version2);
   EXPECT_TRUE(version2 >= version1);
 }
 
@@ -223,6 +238,11 @@ TEST(Version, LessThanEqual) {
   version2 = Version(std::string("5"));
   EXPECT_TRUE(version1 <= version2);
   EXPECT_FALSE(version2 <= version1);
+
+  version1 = Version(std::string("2.0.1a"));
+  version2 = Version(std::string("2.0.1"));
+  EXPECT_TRUE(version1 <= version2);
+  EXPECT_TRUE(version2 <= version1);
 }
 
 TEST(Version, Equal) {
@@ -239,6 +259,11 @@ TEST(Version, Equal) {
   version2 = Version(std::string("5"));
   EXPECT_FALSE(version1 == version2);
   EXPECT_FALSE(version2 == version1);
+
+  version1 = Version(std::string("2.0.1a"));
+  version2 = Version(std::string("2.0.1"));
+  EXPECT_FALSE(version1 == version2);
+  EXPECT_FALSE(version2 == version1);
 }
 
 TEST(Version, NotEqual) {
@@ -253,6 +278,11 @@ TEST(Version, NotEqual) {
 
   version1 = Version(std::string("4"));
   version2 = Version(std::string("5"));
+  EXPECT_TRUE(version1 != version2);
+  EXPECT_TRUE(version2 != version1);
+
+  version1 = Version(std::string("2.0.1a"));
+  version2 = Version(std::string("2.0.1"));
   EXPECT_TRUE(version1 != version2);
   EXPECT_TRUE(version2 != version1);
 }
